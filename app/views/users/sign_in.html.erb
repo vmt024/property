@@ -1,0 +1,11 @@
+<h1>Sign In</h1>
+
+<% form_tag :action=>:process_sign_in do %>
+  <p>Email: <%= text_field :login, :email %></p>
+  <p>Password: <%= password_field :login, :password %></p>
+  <p>
+    <%= submit_tag 'Sign me in' %>
+  </p>
+<% end %>
+
+

@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :users
+  map.resources :users,:collection => {:sign_in => :get, :sign_out=>:get}
 
   # The priority is based upon order of creation: first created -> highest priority.
 

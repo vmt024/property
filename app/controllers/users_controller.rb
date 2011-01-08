@@ -48,9 +48,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        flash[:notice] = "User created!"
+        session[:current_user] = @user.name
         format.html { redirect_to(@user, :notice => 'User was successfully created.') }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
+        flash[:error] = "Create user failed!"
         format.html { render :action => "new" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
@@ -83,5 +86,29 @@ class UsersController < ApplicationController
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def sign_in
+  end
+
+  def process_sign_in
+    @user = User.find_by_email(params[:login][:email])
+
+    if @user.blank? || !@user.correct_password?(params[:login][:password])
+      flash[:error] = "Wrong email address or password."
+      redirect_to :action=>:sign_in
+    end
+
+    if @user.correct_password?(params[:login][:password])
+      flash[:notice] = 'Welcome ' + @user.name + '!'
+      session[:current_user] = @user.name
+      redirect_to url_for(@user)
+    end
+
+  end
+
+  def sign_out
+    session[:current_user] = nil
+    redirect_to :action=>:sign_in
   end
 end
