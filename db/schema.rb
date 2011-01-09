@@ -9,7 +9,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110106105039) do
+ActiveRecord::Schema.define(:version => 20110109014531) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "description",   :limit => 50, :null => false
+    t.integer  "parent_id"
+    t.string   "category_type", :limit => 10, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "property_accounts", :force => true do |t|
+    t.integer  "user_id",                          :null => false
+    t.string   "address_1",          :limit => 50
+    t.string   "address_2",          :limit => 50
+    t.string   "address_3",          :limit => 50
+    t.string   "address_4",          :limit => 50
+    t.string   "post_code",          :limit => 4
+    t.string   "property_type",      :limit => 15
+    t.integer  "number_of_bedrooms"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "property_account_id"
+    t.date     "date"
+    t.string   "description",         :limit => 100
+    t.integer  "category_id"
+    t.decimal  "amount",                             :precision => 8, :scale => 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name",       :limit => 20

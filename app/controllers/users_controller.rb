@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
-
+    @properties = @user.properties
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
@@ -50,6 +50,7 @@ class UsersController < ApplicationController
       if @user.save
         flash[:notice] = "User created!"
         session[:current_user] = @user.name
+        session[:current_user_id] = @user.id
         format.html { redirect_to(@user, :notice => 'User was successfully created.') }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
@@ -102,6 +103,7 @@ class UsersController < ApplicationController
     if @user.correct_password?(params[:login][:password])
       flash[:notice] = 'Welcome ' + @user.name + '!'
       session[:current_user] = @user.name
+      session[:current_user_id] = @user.id
       redirect_to url_for(@user)
     end
 
@@ -109,6 +111,7 @@ class UsersController < ApplicationController
 
   def sign_out
     session[:current_user] = nil
+    session[:current_user_id] = nil
     redirect_to :action=>:sign_in
   end
 end

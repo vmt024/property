@@ -1,5 +1,15 @@
 <h4>Hi <b><%=h @user.name %></b>!</h4>
 You email address is <b><%=h @user.email %></b><br/>
 
+Your property accounts:<br/>
+
+<% @properties.each do |property|  %>
+  <%=link_to property.id, property_account_path(property.id) %>,
+  <%= property.address_1 %> <%= property.address_2 %> <%= property.address_3 %> <%= property.address_4 %> <br/>
+<% end %>
+<br/>
+<br/>
+<br/>
+<%= link_to 'Add Properyt Account', new_property_account_path %> |
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

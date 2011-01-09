@@ -2,11 +2,15 @@
 
 <table>
   <tr>
+    <th>id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th></th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%=h user.id %></td>
+    <td><%=h get_user_name(user.id) %></td>
     <td><%=h user.name %></td>
     <td><%=h user.email %></td>
     <td><%= link_to 'Show', user %></td>

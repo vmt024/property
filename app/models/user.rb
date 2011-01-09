@@ -8,13 +8,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_presence_of :name,:email
 
-  
+  has_many :properties, :class_name => 'PropertyAccount'
   
   
   def correct_password?(submitted_password)
-    logger.error("EEE::#{self.password}")
-    logger.error("EEE::#{self.salt}")
-    logger.error("EEE::#{encrypt(submitted_password)}")
     self.password == encrypt(submitted_password)
   end
   

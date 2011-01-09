@@ -17,14 +17,14 @@
       <nav class="round">
         <ul>
           <% unless session[:current_user].blank? %>
-            <li><%=h session[:current_user] %></li>
+            <li><%=link_to session[:current_user],:controller=>'users',:action=>'show',:id=>session[:current_user_id] %></li>
           <% end %>
-          <li><%= link_to "Home", :action=>'welcome' %></li>
+          <li><%= link_to "Home", :controller=>'users',:action=>'welcome' %></li>
           <li><%= link_to "Help", '#' %></li>
           <% if session[:current_user].blank? %>
-            <li><%= link_to "Sign in", {:action=>'sign_in'} %></li>
+            <li><%= link_to "Sign in", {:controller=>'users',:action=>'sign_in'} %></li>
           <% else %>
-            <li><%= link_to "Sign out", :action=>'sign_out' %></li>
+            <li><%= link_to "Sign out", :controller=>'users',:action=>'sign_out' %></li>
           <% end %>
         </ul>
       </nav>
