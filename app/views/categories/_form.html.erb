@@ -1,0 +1,14 @@
+  <p>
+  <%= f.error_messages %>
+  </p>
+
+  <p>
+    Description: <%= f.text_field 'description' %>
+  </p>
+  <p>
+    Category Type: <%= f.select 'category_type',[['Debit','Debit'],['Credit','Credit']] %>
+  </p>
+  <p>
+    Parent Category: <%= f.text_field 'parent_id' %>
+  </p>
+  

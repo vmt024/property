@@ -1,0 +1,15 @@
+<h2>Property Account</h2>
+
+Owner: <%=link_to get_user_name(@property_account.user_id), user_path(@property_account.user_id) %><br/>
+Address: <br/><%=h @property_account.address_1 %> <%=h @property_account.address_2 %> <br/>
+         <%=h @property_account.address_3 %> <%=h @property_account.address_4 %> <%=h @property_account.post_code %> <br/>
+Property Type: <%=h @property_account.property_type %><br/>
+Number of Bedrooms: <%=h @property_account.number_of_bedrooms %>
+<br/>
+<br/>
+
+<%= link_to 'add transaction', :controller=>'transactions',:action=>'new',:property_account_id=>@property_account.id %> |
+<%= link_to 'list transactions', :controller=>'transactions',:action=>'index',:property_account_id=>@property_account.id %> |
+<%= link_to 'new', new_property_account_path %> |
+<%= link_to 'Edit', edit_property_account_path(@property_account) %> |
+<%= link_to 'Back', property_accounts_path %>

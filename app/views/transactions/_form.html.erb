@@ -1,0 +1,21 @@
+  <p>
+  <%= f.error_messages %>
+  </p>
+
+  <p>
+    Property Account: <%= f.text_field 'property_account_id', :value=>@transaction.property_account_id||params[:property_account_id] %>
+  </p>
+  <p>
+    Date: <%= f.date_select 'date' %>
+  </p>
+  <p>
+    Description: <%= f.text_field 'description' %>
+  </p>
+  
+  <p>
+    Category: <%= f.select 'category_id', Category.find(:all).collect{|c|[c.description,c.id]} %> <%= link_to 'new category', new_category_path %>
+  </p>
+  <p>
+    Amount: <%= f.text_field 'amount' %>
+  </p>
+  

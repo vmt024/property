@@ -1,0 +1,12 @@
+<h1>Editing Property Account</h1>
+
+<% form_for(@property_account) do |f| %>
+
+  <%= render :partial=>'form',:locals=>{:f=>f} %>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @property_account %> |
+<%= link_to 'Back', property_accounts_path %>

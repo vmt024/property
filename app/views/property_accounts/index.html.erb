@@ -1,0 +1,27 @@
+<h1>Listing Property Accounts for <%=h session[:current_user] %></h1>
+
+<table>
+  <tr>
+    <th>id</th>
+    <th>Property Type</th>
+    <th>Number of Bedrooms</th>
+    <th>Suburb</th>
+    <th></th>
+  </tr>
+
+<% @property_accounts.each do |property_account| %>
+  <tr>
+    <td><%=h property_account.id %></td>
+    <td><%=h property_account.property_type %></td>
+    <td><%=h property_account.number_of_bedrooms %></td>
+    <td><%=h property_account.address_3 %></td>
+    <td><%= link_to 'Show', property_account %></td>
+    <td><%= link_to 'Edit', edit_property_account_path(property_account) %></td>
+    <td><%= link_to 'Destroy', property_account, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Property Account', new_property_account_path %>

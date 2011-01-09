@@ -1,0 +1,8 @@
+id: <%=h @transaction.id  %><br/>
+Property Account: <%=h @transaction.property_account_id %><br/>
+Date: <%=h @transaction.date %><br/>
+Category: <%=h @transaction.category_id  %><br/>
+Amount: <%=h @transaction.amount  %><br/>
+<br/>
+<%= link_to 'Edit', edit_transaction_path(@transaction) %> |
+<%= link_to 'Back', transactions_path %>

@@ -1,0 +1,28 @@
+  <p>
+  <%= f.error_messages %>
+  </p>
+
+  <p>
+    House Number: <%= f.text_field 'address_1' %>
+  </p>
+  <p>
+    Street Name: <%= f.text_field 'address_2' %>
+  </p>
+  <p>
+    Suburb: <%= f.text_field 'address_3' %>
+  </p>
+  <p>
+    City: <%= f.text_field 'address_4' %>
+  </p>
+  <p>
+    Post Code: <%= f.text_field 'post_code' %>
+  </p>
+
+  <p>
+    Property Type: <%= f.select 'property_type',[['House','House'],['Apartment','Apartment'],['Unit','Unit'],['Townhouse','Townhouse']] %>
+  </p>
+
+  <p>
+    Number of bedrooms: <%= f.select 'number_of_bedrooms',[[1,1],[2,2],[3,3],[4,4],[5,5],[6,6]] %>
+  </p>
+
