@@ -33,4 +33,5 @@ Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>tru
 
 <br />
 
-<%= link_to 'Add transaction', :controller=>'transactions',:action=>'new',:property_account_id=>params[:property_account_id] %>
+<%= link_to 'Add transaction', :controller=>'transactions',:action=>'new',:property_account_id=>params[:property_account_id] %> |
+<%= link_to 'Manage categories', :controller=>'categories',:action=>'index' %>

@@ -7,6 +7,7 @@ module ApplicationHelper
   end
 
   def get_category_description(id)
+    return 'None' if id.blank?
     return Category.find(id).description
   rescue =>e
     logger.error("Application_helper::get_category_description::#{e}")

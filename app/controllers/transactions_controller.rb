@@ -18,8 +18,8 @@ class TransactionsController < ApplicationController
   end
 
   def list
-    date_from = "#{params[:search]['date_from(1i)']}-#{params[:search]['date_from(2i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_from(2i)']}-#{params[:search]['date_from(3i)']}"
-    date_to = "#{params[:search]['date_to(1i)']}-#{params[:search]['date_to(2i)'].length.eql?(1) ? '0' : '' }#{params[:search]['date_to(2i)']}-#{params[:search]['date_to(3i)']}"
+    date_from = "#{params[:search]['date_from(1i)']}-#{params[:search]['date_from(2i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_from(2i)']}-#{params[:search]['date_from(3i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_from(3i)']}"
+    date_to = "#{params[:search]['date_to(1i)']}-#{params[:search]['date_to(2i)'].length.eql?(1) ? '0' : '' }#{params[:search]['date_to(2i)']}-#{params[:search]['date_to(3i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_to(3i)']}"
 
     type = params[:search][:type]
 

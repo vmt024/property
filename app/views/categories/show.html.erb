@@ -1,7 +1,8 @@
 id: <%=h @category.id  %><br/>
 Description: <%=h @category.description  %><br/>
-Parent Category: <%=h @category.parent_id  %><br/>
-Category Type: <%=h @category.category_type  %><br/>
+Parent Category: <%=link_to(@category.parent_id, :controller=>'categories',:action=>'show',:id=>@category.parent_id) unless @category.parent_id.blank? %>  <%=h get_category_description(@category.parent_id)  %><br/>
+Category Type: <%=h display_dr_or_cr(@category.category_type)  %><br/>
 <br/>
+<%= link_to 'Add', new_category_path %> |
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>

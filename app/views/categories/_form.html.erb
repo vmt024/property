@@ -9,6 +9,7 @@
     Category Type: <%= f.select 'category_type',dr_cr_selection %>
   </p>
   <p>
-    Parent Category: <%= f.text_field 'parent_id' %>
+    <% selection = Category.find(:all).collect{|c| [c.description,c.id] unless c.id.eql?(@category.id) } %>
+    Parent Category: <%= f.select 'parent_id',selection, :include_blank=>true %>
   </p>
   
