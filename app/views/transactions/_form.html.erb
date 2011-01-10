@@ -3,7 +3,8 @@
   </p>
 
   <p>
-    Property Account: <%= f.text_field 'property_account_id', :value=>@transaction.property_account_id||params[:property_account_id] %>
+    <% selection = PropertyAccount.find(:all,:conditions=>['user_id = ?',session[:current_user_id]]).collect{|p|[p.property_name,p.id]} %>
+    Property Account: <%= f.select 'property_account_id', selection,:selected=>session[:current_property_id] %>
   </p>
   <p>
     Date: <%= f.date_select 'date' %>
@@ -11,9 +12,11 @@
   <p>
     Description: <%= f.text_field 'description' %>
   </p>
-  
   <p>
-    Category: <%= f.select 'category_id', Category.find(:all).collect{|c|[c.description,c.id]} %> <%= link_to 'new category', new_category_path %>
+    Transaction Type: <%= f.select 'transaction_type',dr_cr_selection %>
+  </p>
+  <p>
+    Category: <%= f.select 'category_id', Category.find(:all).collect{|c|[c.description,c.id]}, :include_blank=>true %> Can't find proper category? <%= link_to 'add your own category', new_category_path %> or leave blank.
   </p>
   <p>
     Amount: <%= f.text_field 'amount' %>

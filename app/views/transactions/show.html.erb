@@ -1,6 +1,7 @@
 id: <%=h @transaction.id  %><br/>
 Property Account: <%=h @transaction.property_account_id %><br/>
 Date: <%=h @transaction.date %><br/>
+Transaction Type: <%=h display_dr_or_cr(@transaction.transaction_type) %> <br/>
 Category: <%=h @transaction.category_id  %><br/>
 Amount: <%=h @transaction.amount  %><br/>
 <br/>

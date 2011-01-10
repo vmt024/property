@@ -6,7 +6,7 @@
     Description: <%= f.text_field 'description' %>
   </p>
   <p>
-    Category Type: <%= f.select 'category_type',[['Debit','Debit'],['Credit','Credit']] %>
+    Category Type: <%= f.select 'category_type',dr_cr_selection %>
   </p>
   <p>
     Parent Category: <%= f.text_field 'parent_id' %>

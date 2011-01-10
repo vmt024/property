@@ -17,7 +17,13 @@
       <nav class="round">
         <ul>
           <% unless session[:current_user].blank? %>
-            <li><%=link_to session[:current_user],:controller=>'users',:action=>'show',:id=>session[:current_user_id] %></li>
+            <li><%=link_to session[:current_user],:controller=>'users',:action=>'show',:id=>session[:current_user_id] %>
+              <% if session[:current_property_id].blank? %>
+               : <%=link_to 'Please select a project',:controller=>'users',:action=>'show',:id=>session[:current_user_id]  %>
+              <% else %>
+                <%=link_to PropertyAccount.find(session[:current_property_id]).property_name,:controller=>'property_accounts',:action=>'show',:id=>session[:current_property_id] %>
+              <% end %>
+            </li>
           <% end %>
           <li><%= link_to "Home", :controller=>'users',:action=>'welcome' %></li>
           <li><%= link_to "Help", '#' %></li>
@@ -40,8 +46,6 @@
     <ul>
       <li><%= link_to "About", '#' %></li>
       <li><%= link_to "Contact", '#' %></li>
-      <li><a href="http://news.railstutorial.org/">News</a></li>
-      <li><a href="http://www.railstutorial.org/">Rails Tutorial</a></li>
     </ul>
   </nav>
 </footer>

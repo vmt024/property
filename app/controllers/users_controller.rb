@@ -112,6 +112,7 @@ class UsersController < ApplicationController
   def sign_out
     session[:current_user] = nil
     session[:current_user_id] = nil
+    session[:current_property_id] = nil
     redirect_to :action=>:sign_in
   end
 end

@@ -16,7 +16,7 @@ class PropertyAccountsController < ApplicationController
   # GET /property_accounts/1.xml
   def show
     @property_account = PropertyAccount.find(params[:id])
-
+    session[:current_property_id] = @property_account.id
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @property_account }

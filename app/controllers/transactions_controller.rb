@@ -3,16 +3,33 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.xml
   def index
-    if params[:property_account_id].blank?
-    @transactions = Transaction.all
+    if session[:current_property_id].blank?
+      flash[:error] = 'Please select an property account first.'
+      redirect_to :controller=>'users',:action=>'show',:id=>session[:current_user_id]
     else
-      @transactions = Transaction.find_all_by_property_account_id(params[:property_account_id])
+      @transactions = Transaction.find_all_by_property_account_id(session[:current_property_id])
+      @property = PropertyAccount.find(session[:current_property_id])
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @transactions }
+      end
     end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @transactions }
+  end
+
+  def list
+    date_from = "#{params[:search]['date_from(1i)']}-#{params[:search]['date_from(2i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_from(2i)']}-#{params[:search]['date_from(3i)']}"
+    date_to = "#{params[:search]['date_to(1i)']}-#{params[:search]['date_to(2i)'].length.eql?(1) ? '0' : '' }#{params[:search]['date_to(2i)']}-#{params[:search]['date_to(3i)']}"
+
+    type = params[:search][:type]
+
+    @property = PropertyAccount.find(session[:current_property_id])
+    if type.blank?
+      @transactions = Transaction.find(:all, :conditions=>['(property_account_id = ?) and (date between ? and ?)',session[:current_property_id],date_from,date_to])
+    else
+      @transactions = Transaction.find(:all, :conditions=>['(property_account_id = ? and transaction_type = ?) and (date between ? and ?)',session[:current_property_id],type,date_from,date_to])
     end
+    render :action=>:index
   end
 
   # GET /transactions/1
@@ -49,7 +66,8 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.save
-        format.html { redirect_to(@transaction, :notice => 'Transaction was successfully created.') }
+        flash[:notice] = 'Transaction was successfully created.'
+        format.html { redirect_to(:action=>'index',:property_account_id=>@transaction.property_account_id) }
         format.xml  { render :xml => @transaction, :status => :created, :location => @transaction }
       else
         format.html { render :action => "new" }
@@ -65,7 +83,8 @@ class TransactionsController < ApplicationController
 
     respond_to do |format|
       if @transaction.update_attributes(params[:transaction])
-        format.html { redirect_to(@transaction, :notice => 'Transaction was successfully updated.') }
+        flash[:notice] = 'Transaction was successfully updated.'
+        format.html { redirect_to(:action=>'index',:property_account_id=>@transaction.property_account_id) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -1,15 +1,22 @@
 <h4>Hi <b><%=h @user.name %></b>!</h4>
-You email address is <b><%=h @user.email %></b><br/>
 
-Your property accounts:<br/>
 
-<% @properties.each do |property|  %>
-  <%=link_to property.id, property_account_path(property.id) %>,
-  <%= property.address_1 %> <%= property.address_2 %> <%= property.address_3 %> <%= property.address_4 %> <br/>
+<% unless @properties.blank? %>
+Please select one property account to start with:<br/>
+
+  <hr/>
+  <% @properties.each do |property|  %>
+    <%=link_to property.property_name, property_account_path(property.id) %> ----
+    <%=h property.number_of_bedrooms%> bedroom <%=h property.property_type %><br/>
+  <% end %>
+<% else %>
+  <hr/>
+  Opps! you don't have any property accounts in system yet.
+  <br/>
+  <%= link_to '<b>Click here</b>', new_property_account_path %> to add your property details!
 <% end %>
 <br/>
 <br/>
 <br/>
 <%= link_to 'Add Properyt Account', new_property_account_path %> |
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Edit My Profile', edit_user_path(@user) %>
