@@ -1,0 +1,6 @@
+
+
+Processing UsersController#welcome (for 127.0.0.1 at 2011-01-12 20:39:07) [GET]
+Rendering template within layouts/property
+Rendering users/welcome
+Completed in 6ms (View: 3, DB: 0) | 200 OK [http://property/]

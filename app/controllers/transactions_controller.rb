@@ -8,7 +8,7 @@ class TransactionsController < ApplicationController
       redirect_to :controller=>'users',:action=>'show',:id=>session[:current_user_id]
     else
       unless params[:month].blank?
-        @transactions = Transaction.find(:all, :conditions=>['(property_account_id = ?) and date like ?',session[:current_property_id],"#{params[:month]}%"])
+        @transactions = Transaction.find(:all, :conditions=>['(property_account_id = ?) and date ILIKE ?',session[:current_property_id],"#{params[:month]}%"])
       else
         @transactions = Transaction.find_all_by_property_account_id(session[:current_property_id])
       end
