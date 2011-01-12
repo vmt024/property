@@ -32,6 +32,19 @@ module ApplicationHelper
     logger.error("Application_helper::display_dr_or_cr::#{e}")
   end
 
+  def display_transaction_amount(transaction)
+    case transaction.transaction_type
+    when 'Debit'
+      return "#{transaction.amount}"
+    when 'Credit'
+      return "-#{transaction.amount}"
+    else
+      return 'error'
+    end
+  rescue =>e
+    logger.error("Application_helper::display_transaction_amount::#{e}")
+  end
+
   def get_total_balance
     debit_total = Transaction.sum(:amount,:conditions=>['property_account_id = ? and transaction_type = ?', session[:current_property_id], 'Debit'])
     credit_total = Transaction.sum(:amount,:conditions=>['property_account_id = ? and transaction_type = ?',session[:current_property_id], 'Credit'])

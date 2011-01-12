@@ -1,34 +1,50 @@
 <h1>All transactions for <b><%=h @property.property_name %></b></h1>
 <hr/>
-<% form_tag :action=>:list,:property_account_id=>@property.id do%>
+<% form_tag :action=>:list do%>
 <b>Search:</b> <br/>
 Date from: <%= date_select 'search','date_from' %>  To: <%= date_select 'search', 'date_to' %> <br/>
 Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>true %> <%= submit_tag 'View' %>
 <% end %>
 <br/>
+<hr/>
+<% for i in 1..12 do %>
+    <% month = i < 10 ? "0#{i}" : "#{i}"  %>
+    <% month_name = Date::MONTHNAMES %>
+    <%= link_to "#{month_name[i]}",{:action=>:index,:month=>"2011-#{month}"} %> |
+<% end %>
+<br/>
+<hr/>
 <table>
   <tr>
-    <th>id</th>
     <th>Date</th>
     <th>Category</th>
     <th>Type</th>
     <th>Amount</th>
-    <th>Running Balance</th>
+    <!--<th id="running_balance_header">Running Balance</th>-->
   </tr>
 <% balance = 0 %>
 <% @transactions.each do |transaction| %>
   <% balance = calculate_running_balance(balance,transaction.amount,transaction.transaction_type) %>
   <tr>
-    <td><%=h transaction.id  %></td>
     <td><%=h transaction.date %></td>
     <td><%=h get_category_description(transaction.category_id)  %></td>
     <td><%=h display_dr_or_cr(transaction.transaction_type)  %></td>
-    <td><%=h transaction.amount  %></td>
-    <td><%=h balance %></td>
+    <td><%=h display_transaction_amount(transaction)  %></td>
+    <!--<td id="running_balance"><=h balance %></td>-->
     <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
     <td><%= link_to 'Destroy', transaction, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td><b>Sub Total:</b></td>
+    <td><%=h balance %></td>
+    <td></td>
+    <td></td>
+    
+  </tr>
+
 </table>
 
 <br />

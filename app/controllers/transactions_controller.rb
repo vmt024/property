@@ -7,7 +7,11 @@ class TransactionsController < ApplicationController
       flash[:error] = 'Please select an property account first.'
       redirect_to :controller=>'users',:action=>'show',:id=>session[:current_user_id]
     else
-      @transactions = Transaction.find_all_by_property_account_id(session[:current_property_id])
+      unless params[:month].blank?
+        @transactions = Transaction.find(:all, :conditions=>['(property_account_id = ?) and date like ?',session[:current_property_id],"#{params[:month]}%"])
+      else
+        @transactions = Transaction.find_all_by_property_account_id(session[:current_property_id])
+      end
       @property = PropertyAccount.find(session[:current_property_id])
       respond_to do |format|
         format.html # index.html.erb
