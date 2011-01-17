@@ -1,0 +1,111 @@
+
+
+Processing UsersController#sign_in (for 127.0.0.1 at 2011-01-12 20:50:27) [GET]
+Rendering template within layouts/property
+Rendering users/sign_in
+Completed in 6ms (View: 4, DB: 0) | 200 OK [http://property/users/sign_in]
+
+
+Processing UsersController#process_sign_in (for 127.0.0.1 at 2011-01-12 20:50:35) [POST]
+  Parameters: {"commit"=>"Sign me in", "authenticity_token"=>"43eMm/xVtf2tVbDVEcPct9yY5lKVGbaBY3wvoAExR+I=", "login"=>{"password"=>"1234", "email"=>"vmt024@gmail.com"}}
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."email" = 'vmt024@gmail.com') LIMIT 1[0m
+Redirected to http://property/users/2
+Completed in 12ms (DB: 0) | 302 Found [http://property/users/process_sign_in]
+
+
+Processing UsersController#show (for 127.0.0.1 at 2011-01-12 20:50:35) [GET]
+  Parameters: {"id"=>"2"}
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM "users" WHERE ("users"."id" = 2) [0m
+Rendering template within layouts/property
+Rendering users/show
+  [4;36;1mPropertyAccount Load (0.3ms)[0m   [0;1mSELECT * FROM "property_accounts" WHERE ("property_accounts".user_id = 2) [0m
+Completed in 18ms (View: 6, DB: 0) | 200 OK [http://property/users/2]
+
+
+Processing PropertyAccountsController#show (for 127.0.0.1 at 2011-01-12 20:50:37) [GET]
+  Parameters: {"id"=>"3"}
+  [4;35;1mPropertyAccount Load (0.2ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Rendering template within layouts/property
+Rendering property_accounts/show
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM "users" WHERE ("users"."id" = 2) [0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT count(*) AS count_all FROM "transactions" WHERE (property_account_id = 3) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT count(*) AS count_all FROM "transactions" WHERE (property_account_id = 3 and transaction_type = 'Debit') [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT count(*) AS count_all FROM "transactions" WHERE (property_account_id = 3 and transaction_type = 'Credit') [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSELECT sum("transactions".amount) AS sum_amount FROM "transactions" WHERE (property_account_id = 3 and transaction_type = 'Debit') [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT sum("transactions".amount) AS sum_amount FROM "transactions" WHERE (property_account_id = 3 and transaction_type = 'Credit') [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Completed in 22ms (View: 16, DB: 1) | 200 OK [http://property/property_accounts/3]
+
+
+Processing TransactionsController#index (for 127.0.0.1 at 2011-01-12 20:50:39) [GET]
+  Parameters: {"property_account_id"=>"3"}
+  [4;35;1mTransaction Load (0.4ms)[0m   [0mSELECT * FROM "transactions" WHERE ("transactions"."property_account_id" = 3) [0m
+  [4;36;1mPropertyAccount Load (0.2ms)[0m   [0;1mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Rendering template within layouts/property
+Rendering transactions/index
+  [4;35;1mCategory Load (0.3ms)[0m   [0mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Completed in 109ms (View: 95, DB: 1) | 200 OK [http://property/transactions?property_account_id=3]
+
+
+Processing TransactionsController#index (for 127.0.0.1 at 2011-01-12 20:50:41) [GET]
+  Parameters: {"month"=>"2011-02"}
+  [4;36;1mTransaction Load (0.6ms)[0m   [0;1mSELECT * FROM "transactions" WHERE ((property_account_id = 3) and date LIKE '2011-02%') [0m
+  [4;35;1mPropertyAccount Load (0.2ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Rendering template within layouts/property
+Rendering transactions/index
+  [4;36;1mCategory Load (0.2ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Completed in 30ms (View: 21, DB: 1) | 200 OK [http://property/transactions?month=2011-02]
+
+
+Processing TransactionsController#index (for 127.0.0.1 at 2011-01-12 20:50:44) [GET]
+  Parameters: {"month"=>"2011-01"}
+  [4;36;1mTransaction Load (0.6ms)[0m   [0;1mSELECT * FROM "transactions" WHERE ((property_account_id = 3) and date LIKE '2011-01%') [0m
+  [4;35;1mPropertyAccount Load (0.2ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Rendering template within layouts/property
+Rendering transactions/index
+  [4;36;1mCategory Load (0.2ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Completed in 37ms (View: 24, DB: 1) | 200 OK [http://property/transactions?month=2011-01]
+
+
+Processing TransactionsController#index (for 127.0.0.1 at 2011-01-12 20:51:06) [GET]
+  [4;36;1mTransaction Load (0.3ms)[0m   [0;1mSELECT * FROM "transactions" WHERE ("transactions"."property_account_id" = 3) [0m
+  [4;35;1mPropertyAccount Load (0.2ms)[0m   [0mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Rendering template within layouts/property
+Rendering transactions/index
+  [4;36;1mCategory Load (0.2ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Completed in 46ms (View: 24, DB: 1) | 200 OK [http://property/transactions]
+
+
+Processing TransactionsController#index (for 127.0.0.1 at 2011-01-12 20:51:14) [GET]
+  Parameters: {"month"=>"2011-02"}
+  [4;35;1mTransaction Load (2.2ms)[0m   [0mSELECT * FROM "transactions" WHERE ((property_account_id = 3) and date LIKE '2011-02%') [0m
+  [4;36;1mPropertyAccount Load (0.2ms)[0m   [0;1mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Rendering template within layouts/property
+Rendering transactions/index
+  [4;35;1mCategory Load (0.3ms)[0m   [0mSELECT * FROM "categories" WHERE ("categories"."id" = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM "property_accounts" WHERE ("property_accounts"."id" = 3) [0m
+Completed in 87ms (View: 75, DB: 3) | 200 OK [http://property/transactions?month=2011-02]
+
+
+Processing UsersController#welcome (for 127.0.0.1 at 2011-01-16 08:10:15) [GET]
+Rendering template within layouts/property
+Rendering users/welcome
+Completed in 94ms (View: 91, DB: 0) | 200 OK [http://property/]
+
+
+Processing UsersController#welcome (for 127.0.0.1 at 2011-01-16 16:44:00) [GET]
+Rendering template within layouts/property
+Rendering users/welcome
+Completed in 83ms (View: 81, DB: 0) | 200 OK [http://property/]
