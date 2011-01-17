@@ -12,4 +12,7 @@ module TransactionsHelper
   rescue =>e
     logger.error("Transaction_helper::calculate_running_balance::#{e}")
   end
+
+
+  
 end

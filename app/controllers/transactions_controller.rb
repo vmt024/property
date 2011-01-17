@@ -8,7 +8,7 @@ class TransactionsController < ApplicationController
       redirect_to :controller=>'users',:action=>'show',:id=>session[:current_user_id]
     else
       unless params[:month].blank?
-        @transactions = Transaction.find(:all, :conditions=>['property_account_id = ? and date_trunc(\'day\',date) LIKE ?',session[:current_property_id],"#{params[:month]}%"])
+        @transactions = Transaction.find(:all, :conditions=>['property_account_id = ? and date LIKE ?',session[:current_property_id],"#{params[:month]}%"])
       else
         @transactions = Transaction.find_all_by_property_account_id(session[:current_property_id])
       end
@@ -16,6 +16,8 @@ class TransactionsController < ApplicationController
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @transactions }
+        format.csv { export_to_csv(@transactions)}
+        format.pdf {export_to_pdf(@transactions)}
       end
     end
 
@@ -108,4 +110,54 @@ class TransactionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
+  private
+
+  def export_to_csv(transactions)
+
+    balance = 0
+    csv_string = FasterCSV.generate do |csv|
+      # header row
+      csv << ["Date", "Category", "Type", "Amount"]
+
+      # data rows
+      transactions.each do |t|
+        # balance
+        balance += t.amount
+        csv << [t.date, t.category_id, t.transaction_type,t.amount]
+      end
+      csv << ["","","Balance",balance]
+    end
+
+    # send it to the browser
+    send_data csv_string,
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=transactions.csv"
+    end
+
+   def export_to_pdf(transactions)
+     balance = 0
+     file_path = "#{Rails.root}/public/reports/pdf_report"
+     html = File.new("#{file_path}.html",'w+')
+     # header row
+     html << "<table><tr><th>Date</th><th>Category</th><th>Type</th><th>Amount</th></tr> \n"
+     
+      # data rows
+      transactions.each do |t|
+        # balance
+        balance += t.amount
+        html << "<tr><td>#{t.date}</td><td>#{t.category_id}</td><td>#{t.transaction_type}</td><td>#{t.amount}</td></tr>"
+      end
+      html << "<tr><td>&nbsp;</td><td>&nbsp;</td><td><b>Balance: </b></td><td>#{balance}</td></tr>"
+      html.close()
+      
+      system("wkhtmltopdf #{file_path}.html #{file_path}.pdf" )
+
+      
+      
+      send_file "#{file_path}.pdf",
+                :type => 'application/pdf; charset=iso-8859-1; header=present',
+                :disposition => "attachment; filename=pdf_report.pdf"
+   end
 end
