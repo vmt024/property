@@ -125,7 +125,7 @@ class TransactionsController < ApplicationController
       transactions.each do |t|
         # balance
         balance += t.amount
-        csv << [t.date, t.category_id, t.transaction_type,t.amount]
+        csv << [t.date, Category.category_desc(t.category_id), Transaction.type_desc(t.transaction_type),t.amount]
       end
       csv << ["","","Balance",balance]
     end
@@ -147,7 +147,7 @@ class TransactionsController < ApplicationController
       transactions.each do |t|
         # balance
         balance += t.amount
-        html << "<tr><td>#{t.date}</td><td>#{t.category_id}</td><td>#{t.transaction_type}</td><td>#{t.amount}</td></tr>"
+        html << "<tr><td>#{t.date}</td><td>#{Category.category_desc(t.category_id)}</td><td>#{Transaction.type_desc(t.transaction_type)}</td><td>#{t.amount}</td></tr>"
       end
       html << "<tr><td>&nbsp;</td><td>&nbsp;</td><td><b>Balance: </b></td><td>#{balance}</td></tr>"
       html.close()
