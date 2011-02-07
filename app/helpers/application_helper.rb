@@ -35,9 +35,9 @@ module ApplicationHelper
   def display_transaction_amount(transaction)
     case transaction.transaction_type
     when 'Debit'
-      return "#{transaction.amount}"
+      return "#{number_to_currency(transaction.amount)}"
     when 'Credit'
-      return "-#{transaction.amount}"
+      return "-#{number_to_currency(transaction.amount)}"
     else
       return 'error'
     end

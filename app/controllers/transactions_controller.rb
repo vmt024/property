@@ -10,7 +10,7 @@ class TransactionsController < ApplicationController
       unless params[:month].blank?
         @transactions = Transaction.find(:all, :conditions=>['property_account_id = ? and date LIKE ?',session[:current_property_id],"#{params[:month]}%"])
       else
-        @transactions = Transaction.find_all_by_property_account_id(session[:current_property_id])
+        @transactions = Transaction.find(:all,:conditions=>['property_account_id = ?', session[:current_property_id]],:order=>'date asc')
       end
       @property = PropertyAccount.find(session[:current_property_id])
       respond_to do |format|
@@ -124,7 +124,12 @@ class TransactionsController < ApplicationController
       # data rows
       transactions.each do |t|
         # balance
-        balance += t.amount
+        if t.transaction_type.eql?('Debit')
+          balance += t.amount.to_f
+        else
+          balance -= t.amount.to_f
+        end
+
         csv << [t.date, Category.category_desc(t.category_id), Transaction.type_desc(t.transaction_type),t.amount]
       end
       csv << ["","","Balance",balance]
@@ -146,10 +151,15 @@ class TransactionsController < ApplicationController
       # data rows
       transactions.each do |t|
         # balance
-        balance += t.amount
-        html << "<tr><td>#{t.date}</td><td>#{Category.category_desc(t.category_id)}</td><td>#{Transaction.type_desc(t.transaction_type)}</td><td>#{t.amount}</td></tr>"
+        if t.transaction_type.eql?('Debit')
+          balance += t.amount.to_f
+        else
+          balance -= t.amount.to_f
+        end
+
+        html << "<tr><td>#{t.date}</td><td>#{Category.category_desc(t.category_id)}</td><td>#{Transaction.type_desc(t.transaction_type)}</td><td>#{(t.amount)}</td></tr>"
       end
-      html << "<tr><td>&nbsp;</td><td>&nbsp;</td><td><b>Balance: </b></td><td>#{balance}</td></tr>"
+      html << "<tr><td>&nbsp;</td><td>&nbsp;</td><td><b>Balance: </b></td><td>#{(balance)}</td></tr>"
       html.close()
       
       system("wkhtmltopdf #{file_path}.html #{file_path}.pdf" )
