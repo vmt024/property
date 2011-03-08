@@ -1,24 +1,42 @@
-  <p>
-  <%= f.error_messages %>
-  </p>
-
-  <p>
+<table class="record_form"> 
+  <tr>
+    <th>
     <% selection = PropertyAccount.find(:all,:conditions=>['user_id = ?',session[:current_user_id]]).collect{|p|[p.property_name,p.id]} %>
-    Property Account: <%= f.select 'property_account_id', selection,:selected=>session[:current_property_id] %>
-  </p>
-  <p>
-    Date: <%= f.date_select 'date' %>
-  </p>
-  <p>
-    Description: <%= f.text_field 'description' %>
-  </p>
-  <p>
-    Transaction Type: <%= f.select 'transaction_type',dr_cr_selection %>
-  </p>
-  <p>
-    Category: <%= f.select 'category_id', Category.find(:all).collect{|c|[c.description,c.id]}, :include_blank=>true %> Can't find proper category? <%= link_to 'add your own category', new_category_path %> or leave blank.
-  </p>
-  <p>
-    Amount: <%= f.text_field 'amount' %>
-  </p>
-  
+    Property Account: </th>
+    <td><%= f.select 'property_account_id', selection,:selected=>session[:current_property_id] %></td>
+  </tr>
+  <tr>
+    <th>Date: </th>
+    <td><%= f.text_field 'date',:readonly=>true, :class=>"date_field" %></td>
+  </tr>
+  <tr>
+    <th>Description: </th>
+    <td><%= f.text_field 'description' %></td>
+  </tr>
+  <tr>
+    <th>Transaction Type: </th>
+    <td><%= f.select 'transaction_type',dr_cr_selection %></td>
+  </tr>
+  <tr>
+    <th>Category: </th>
+    <td><%= f.select 'category_id', Category.find(:all).collect{|c|[c.description,c.id]}, :include_blank=>true %> Can't find proper category? <%= link_to 'add your own category', new_category_path %> or leave blank.</td>
+  </tr>
+  <tr>
+    <th>Amount: </th>
+    <td><%= f.text_field 'amount' %> <small>(unit: dollar)</small></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+	$(function() {
+		$( "#transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+        var date = new LiveValidation('transaction_date');
+        var description = new LiveValidation('transaction_description');
+        var amount = new LiveValidation('transaction_amount');
+        description.add( Validate.Presence );
+        date.add( Validate.Presence );
+        amount.add( Validate.Presence );
+        amount.add(Validate.Numericality, { minimum: 0.01});
+
+</script>

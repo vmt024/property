@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   layout 'property'
+
+  before_filter :has_permission, :only=>[:index,:destroy]
+
   # GET /users
   # GET /users.xml
   def index
@@ -17,7 +20,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find(params[:id])
+    id = user_is_admin? ? params[:id] : session[:current_user_id]
+    @user = User.find(id)
+
     @properties = @user.properties
     respond_to do |format|
       format.html # show.html.erb
@@ -38,7 +43,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    id = user_is_admin? ? params[:id] : session[:current_user_id]
+    @user = User.find(id)
   end
 
   # POST /users
@@ -64,7 +70,8 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find(params[:id])
+    id = user_is_admin? ? params[:id] : session[:current_user_id]
+    @user = User.find(id)
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -101,7 +108,6 @@ class UsersController < ApplicationController
     end
 
     if @user.correct_password?(params[:login][:password])
-      flash[:notice] = 'Welcome ' + @user.name + '!'
       session[:current_user] = @user.name
       session[:current_user_id] = @user.id
       redirect_to url_for(@user)

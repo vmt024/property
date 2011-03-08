@@ -1,4 +1,9 @@
-<h1>Editing Property Account</h1>
+<div class="content_title">
+  <h2>Editing Property Account</h2>
+</div>
+<div class="options">
+  <%= link_to image_tag('view.gif',:size=>'18x18') + 'Show', @property_account %>
+</div>
 
 <% form_for(@property_account) do |f| %>
 
@@ -7,6 +12,3 @@
     <%= f.submit 'Update' %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @property_account %> |
-<%= link_to 'Back', property_accounts_path %>

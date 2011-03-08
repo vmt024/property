@@ -75,4 +75,23 @@ module ApplicationHelper
     logger.error("Application_helper::get_number_of_cr_transactions::#{e}")
   end
 
+  def show_header
+    params[:controller].eql?('users') && params[:action].eql?('welcome')
+  end
+
+  def city_list
+      ['Auckland','Christchurch','Wellington','Hamilton','Napier','Hastings',
+       'Tauranga','Dunedin','Palmerston North','Nelson','Rotorua','New Plymouth',
+       'Whangarei','Invercargill','Wanganui','Gisborne','Other']
+  end
+
+  def is_admin?
+    return false if @user.blank?
+    return @user.is_admin.eql?(1) ? true : false
+  end
+
+  def is_owner?(id)
+    return false if @user.blank?
+    return @user.id.eql?(id) ? true : false
+  end
 end

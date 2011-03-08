@@ -1,9 +1,32 @@
-id: <%=h @transaction.id  %><br/>
-Property Account: <%=h @transaction.property_account_id %><br/>
-Date: <%=h @transaction.date %><br/>
-Transaction Type: <%=h display_dr_or_cr(@transaction.transaction_type) %> <br/>
-Category: <%=h @transaction.category_id  %><br/>
-Amount: <%=h @transaction.amount  %><br/>
-<br/>
-<%= link_to 'Edit', edit_transaction_path(@transaction) %> |
-<%= link_to 'Back', transactions_path %>
+<div class="content_title">
+  <h2>Transaction Details</h2>
+</div>
+<div class="options">
+  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Edit', edit_transaction_path(@transaction) %>
+</div>
+<table class="show_record">
+  <tr>
+    <th>id: </th>
+    <td><%=h @transaction.id  %></td>
+  </tr>
+  <tr>
+    <th>Property Account: </th>
+    <td><%=h @transaction.property_account_id %></td>
+  </tr>
+  <tr>
+    <th>Date: </th>
+    <td><%=h @transaction.date %></td>
+  </tr>
+  <tr>
+    <th>Transaction Type: </th>
+    <td><%=h display_dr_or_cr(@transaction.transaction_type) %> </td>
+  </tr>
+  <tr>
+    <th>Category: </th>
+    <td><%=h @transaction.category_id  %></td>
+  </tr>
+  <tr>
+    <th>Amount: </th>
+    <td><%=h @transaction.amount  %></td>
+  </tr>
+</table>

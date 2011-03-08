@@ -1,15 +1,21 @@
-  <p>
-  <%= f.error_messages %>
-  </p>
+<table class="record_form">
+  <tr>
+    <th>Description: </th>
+    <td><%= f.text_field 'description' %></td>
+  </tr>
+  <tr>
+    <th>Category Type: </th>
+    <td><%= f.select 'category_type',dr_cr_selection %></td>
+  </tr>
+  <tr>
+    <th><% selection = Category.find(:all).collect{|c| [c.description,c.id] unless c.id.eql?(@category.id) } %>
+    Parent Category: </th>
+    <td><%= f.select 'parent_id',selection, :include_blank=>true %></td>
+  </tr>
+</table>
 
-  <p>
-    Description: <%= f.text_field 'description' %>
-  </p>
-  <p>
-    Category Type: <%= f.select 'category_type',dr_cr_selection %>
-  </p>
-  <p>
-    <% selection = Category.find(:all).collect{|c| [c.description,c.id] unless c.id.eql?(@category.id) } %>
-    Parent Category: <%= f.select 'parent_id',selection, :include_blank=>true %>
-  </p>
-  
+
+<script type="text/javascript">
+    var description = new LiveValidation('category_description');
+    description.add( Validate.Presence );
+</script>

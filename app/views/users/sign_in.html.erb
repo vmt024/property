@@ -1,11 +1,33 @@
-<h1>Sign In</h1>
-
+<div class="content_title">
+<h2>Sign In</h2>
+</div>
 <% form_tag :action=>:process_sign_in do %>
-  <p>Email: <%= text_field :login, :email %></p>
-  <p>Password: <%= password_field :login, :password %></p>
-  <p>
-    <%= submit_tag 'Sign me in' %>
-  </p>
+  <fieldset>
+    <br/>
+    <div class="span-4" style="margin-top:14px;"><label for="login_email"><h3>Email: </h3></label></div>
+    <div class="span-15 last">
+        <%= text_field :login, :email, :class=>'title' %>
+    </div>
+
+    <div class="span-4" style="margin-top:14px;">
+        <label for="login_password"><h3>Password: </h3></label>
+    </div>
+    <div class="span-15 last">
+        <%= password_field :login, :password,:class=>'title' %>
+    </div>
+    <div class="span-15 last" style="text-align: right;">
+      <%= submit_tag 'Sign me in' %> &nbsp;&nbsp;&nbsp; <%=link_to_function 'Forget Password ?',"alert('Please email vmt024@gmail.com with your email address.  I will send your password to you.');" %>
+    </div>
+  </fieldset>
 <% end %>
 
+<script type="text/javascript">
+    var email = new LiveValidation('login_email');
+    var password = new LiveValidation('login_password');
+    
+    email.add( Validate.Presence );
+    email.add( Validate.Email );
+    password.add( Validate.Presence);
+    
+</script>
 

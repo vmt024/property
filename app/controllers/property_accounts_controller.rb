@@ -1,10 +1,15 @@
 class PropertyAccountsController < ApplicationController
 
   layout 'property'
+  before_filter :has_permission, :only=>[:destroy]
   # GET /property_accounts
   # GET /property_accounts.xml
   def index
-    @property_accounts = PropertyAccount.find_all_by_user_id(session[:current_user_id])
+    if user_is_admin?
+      @property_accounts = PropertyAccount.find(:all)
+    else
+      @property_accounts = PropertyAccount.find_all_by_user_id(session[:current_user_id])
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +22,12 @@ class PropertyAccountsController < ApplicationController
   def show
     @property_account = PropertyAccount.find(params[:id])
     session[:current_property_id] = @property_account.id
+    unless user_is_admin? || user_is_owner?(@property_account.user_id)
+      session[:current_property_id] = nil
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @property_account }
@@ -37,13 +48,18 @@ class PropertyAccountsController < ApplicationController
   # GET /property_accounts/1/edit
   def edit
     @property_account = PropertyAccount.find(params[:id])
+    unless user_is_admin? || user_is_owner?(@property_account.user_id)
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
   end
 
   # POST /property_accounts
   # POST /property_accounts.xml
   def create
     @property_account = PropertyAccount.new(params[:property_account])
-
+    
     respond_to do |format|
       @property_account.user_id = session[:current_user_id]
       if @property_account.save
@@ -61,8 +77,13 @@ class PropertyAccountsController < ApplicationController
   # PUT /property_accounts/1
   # PUT /property_accounts/1.xml
   def update
+    
     @property_account = PropertyAccount.find(params[:id])
-
+    unless user_is_admin? || user_is_owner?(@property_account.user_id)
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
     respond_to do |format|
       if @property_account.update_attributes(params[:property_account])
         format.html { redirect_to(@property_account, :notice => 'PropertyAccount was successfully updated.') }
@@ -85,7 +106,5 @@ class PropertyAccountsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
-
-
+  
 end

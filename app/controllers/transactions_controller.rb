@@ -24,8 +24,8 @@ class TransactionsController < ApplicationController
   end
 
   def list
-    date_from = "#{params[:search]['date_from(1i)']}-#{params[:search]['date_from(2i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_from(2i)']}-#{params[:search]['date_from(3i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_from(3i)']}"
-    date_to = "#{params[:search]['date_to(1i)']}-#{params[:search]['date_to(2i)'].length.eql?(1) ? '0' : '' }#{params[:search]['date_to(2i)']}-#{params[:search]['date_to(3i)'].length.eql?(1) ? '0' : ''}#{params[:search]['date_to(3i)']}"
+    date_from = params[:search][:date_from]
+    date_to = params[:search][:date_to]
 
     type = params[:search][:type]
 
@@ -42,7 +42,11 @@ class TransactionsController < ApplicationController
   # GET /transactions/1.xml
   def show
     @transaction = Transaction.find(params[:id])
-
+    unless user_is_admin? || user_is_owner?(@transaction.property.user_id)
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @transaction }
@@ -63,6 +67,11 @@ class TransactionsController < ApplicationController
   # GET /transactions/1/edit
   def edit
     @transaction = Transaction.find(params[:id])
+    unless user_is_admin? || user_is_owner?(@transaction.property.user_id)
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
   end
 
   # POST /transactions
@@ -86,7 +95,11 @@ class TransactionsController < ApplicationController
   # PUT /transactions/1.xml
   def update
     @transaction = Transaction.find(params[:id])
-
+    unless user_is_admin? || user_is_owner?(@transaction.property.user_id)
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
     respond_to do |format|
       if @transaction.update_attributes(params[:transaction])
         flash[:notice] = 'Transaction was successfully updated.'
@@ -103,6 +116,11 @@ class TransactionsController < ApplicationController
   # DELETE /transactions/1.xml
   def destroy
     @transaction = Transaction.find(params[:id])
+    unless user_is_admin? || user_is_owner?(@transaction.property.user_id)
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>"users",:action=>"sign_in"
+      return false
+    end
     @transaction.destroy
 
     respond_to do |format|

@@ -1,2 +1,4 @@
 # Ignore following files
 nbproject
+db
+log/development.log

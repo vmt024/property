@@ -3,52 +3,46 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Property Management System</title>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>House Link</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
   <title>Users: <%= controller.action_name %></title>
-  <%= stylesheet_link_tag 'screen', :media=>'screen' %>
+  <%= stylesheet_link_tag 'screen','ie','scaffold', :media=>'screen' %>
   <%= stylesheet_link_tag 'print', :media=>'print' %>
-  <%= stylesheet_link_tag 'scaffold', :media=>'screen' %>
-</head>
-<body>
-<div class="container">
-  <header>
-    <%= image_tag("logo.gif",:size=>'100x100', :alt => "Sample App", :class => "round") %>
-      <nav class="round">
-        <ul>
-          <% unless session[:current_user].blank? %>
-            <li><%=link_to session[:current_user],:controller=>'users',:action=>'show',:id=>session[:current_user_id] %>
-              <% if session[:current_property_id].blank? %>
-               : <%=link_to 'Please select a project',:controller=>'users',:action=>'show',:id=>session[:current_user_id]  %>
-              <% else %>
-                <%=link_to PropertyAccount.find(session[:current_property_id]).property_name,:controller=>'property_accounts',:action=>'show',:id=>session[:current_property_id] %>
-              <% end %>
-            </li>
-          <% end %>
-          <li><%= link_to "Home", :controller=>'users',:action=>'welcome' %></li>
-          <li><%= link_to "Help", '#' %></li>
-          <% if session[:current_user].blank? %>
-            <li><%= link_to "Sign in", {:controller=>'users',:action=>'sign_in'} %></li>
-          <% else %>
-            <li><%= link_to "Sign out", :controller=>'users',:action=>'sign_out' %></li>
-          <% end %>
-        </ul>
-      </nav>
-      </header>
-      <section class="round">
-        <p style="color: green"><%= flash[:notice] %></p>
-        <p style="color: red"><%= flash[:error] %></p>
-        <%= yield %>
-      </section>
-    </div>
-<footer>
-  <nav class="round">
-    <ul>
-      <li><%= link_to "About", '#' %></li>
-      <li><%= link_to "Contact", '#' %></li>
-    </ul>
-  </nav>
-</footer>
+  <%= stylesheet_link_tag 'jquery-ui', :media=>'screen' %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui','livevalidation'  %>
+  <link rel="property management" href="favicon.ico" />
+  <script type="text/javascript">
+  function initialize() {
+    var map_div = document.getElementById("map_canvas");
+    if (map_div !== null){
+        var latlng = new google.maps.LatLng(-36.850, 174.760);
+        var myOptions = {
+          zoom: 13,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(map_div,myOptions);
+    }
+  }
+</script>
 
+</head>
+<body onload="initialize();">
+<div class="container">
+  <div class="top-banner span-24 last"><%= render :partial=>'layouts/top_banner' %></div>
+  <% if show_header %>
+    <div class="header span-24 last"><%= render :partial=>'layouts/header' %></div>
+  <% else %>
+    
+    <div class="message_div span-24 last">
+      <% unless flash[:error].blank? %><div class="error"><%= flash[:error] %></div><% end %>
+      <% unless flash[:notice].blank? %><div class="notice"><%= flash[:notice] %></div><% end %>
+      <% unless flash[:info].blank? %><div class="info"><%= flash[:info] %></div><% end %>
+      <% unless flash[:success].blank? %><div class="success"><%= flash[:success] %></div><% end %>
+    </div>
+    <div class="main-content span-24 last"><%= render :partial=>'layouts/content' %></div>
+  <% end %>
+</div>
+<div class="footer"><%= render :partial=>'layouts/footer' %></div>
 </body>
 </html>

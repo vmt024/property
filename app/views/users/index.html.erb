@@ -1,6 +1,10 @@
-<h1>Listing users</h1>
-
-<table>
+<div class="content_title">
+  <h2>Listing Users</h2>
+</div>
+<div class="options">
+  <%= link_to image_tag("add.png",:size=>"18x18") + 'New user', new_user_path %>
+</div>
+<table class="list_record">
   <tr>
     <th>id</th>
     <th>Name</th>
@@ -13,13 +17,10 @@
     <td><%=h get_user_name(user.id) %></td>
     <td><%=h user.name %></td>
     <td><%=h user.email %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class="list_option">
+        <%= link_to image_tag("view.gif"), user %>
+        <%= link_to image_tag("edit.png"), edit_user_path(user) %>
+        <%= link_to image_tag("close.png"), user, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New user', new_user_path %>

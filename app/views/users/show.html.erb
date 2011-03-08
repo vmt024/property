@@ -1,22 +1,24 @@
-<h4>Hi <b><%=h @user.name %></b>!</h4>
-
-
+<div class="content_title">
+  <h2>Welcome <%= session[:current_user] %>!</h2>
+</div>
+<div class="options"> <%= link_to image_tag('edit.png',:size=>'18x18') + 'Edit My Profile', edit_user_path %></div>
+<hr class="space"></hr>
 <% unless @properties.blank? %>
-Please select one property account to start with:<br/>
+<h3>Please select one property account to start with:</h3>
 
-  <hr/>
+<table class="show_record">
   <% @properties.each do |property|  %>
-    <%=link_to property.property_name, property_account_path(property.id) %> ----
-    <%=h property.number_of_bedrooms%> bedroom <%=h property.property_type %><br/>
+  <tr>
+    <th><%=h property.nick_name %>:</th>
+    <td><%=h property.number_of_bedrooms%> bedrooms <%=h property.property_type %> in Auckland</td>
+    <td class="list_option"><%= link_to image_tag("view.gif",:size=>"16x16") + 'select', property_account_path(property.id) %></td>
+  </tr>
   <% end %>
+</table>
+  
 <% else %>
   <hr/>
-  Opps! you don't have any property accounts in system yet.
+  <h3>Opps! you don't have any property accounts in system yet</h3>
   <br/>
-  <%= link_to '<b>Click here</b>', new_property_account_path %> to add your property details!
+  <%= link_to image_tag('add.png',:size=>'18x18') + '<b>Click here</b>', new_property_account_path %> to add your property details!
 <% end %>
-<br/>
-<br/>
-<br/>
-<%= link_to 'Add Properyt Account', new_property_account_path %> |
-<%= link_to 'Edit My Profile', edit_user_path(@user) %>

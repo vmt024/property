@@ -1,0 +1,18 @@
+<ul>
+  <li><%= link_to "Home", :controller=>'users',:action=>'welcome' %></li>
+  <% unless session[:current_user].blank? %>
+    <li><%=link_to session[:current_user],:controller=>'users',:action=>'show',:id=>session[:current_user_id] %>
+      <% if session[:current_property_id].blank? %>
+       : <%=link_to 'Please select a project',:controller=>'users',:action=>'show',:id=>session[:current_user_id]  %>
+      <% else %>
+        <%=link_to PropertyAccount.find(session[:current_property_id]).property_name,:controller=>'property_accounts',:action=>'show',:id=>session[:current_property_id] %>
+      <% end %>
+    </li>
+  <% end %>
+  <% if session[:current_user].blank? %>
+    <li><%= link_to "Sign Up", new_user_url %></li>
+    <li><%= link_to "Sign In", {:controller=>'users',:action=>'sign_in'} %></li>
+  <% else %>
+    <li><%= link_to "Sign Out", :controller=>'users',:action=>'sign_out' %></li>
+  <% end %>
+</ul>

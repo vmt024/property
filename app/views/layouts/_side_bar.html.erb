@@ -1,0 +1,17 @@
+<div class="sidebar-content">
+  <% if false %>
+    <h4>Welcome <%= session[:current_user] %> <%= link_to '[Edit]', edit_user_path(@user) %></h4>
+    <hr/>
+    <b>Property:</b>
+    <ul>
+      <% @properties.each do |property|  %>
+      <li>
+        <%=link_to property.property_name, property_account_path(property.id) %>
+      </li>
+      <% end %>
+      <li>
+        <%= link_to 'Add Property', new_property_account_path %>
+      </li>
+  </ul>
+  <% end %>
+</div>

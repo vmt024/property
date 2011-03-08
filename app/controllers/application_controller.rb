@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :check_user_login, :except=>[:welcome,:sign_in,:process_sign_in,:new,:create]
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
 
   private
   
@@ -15,8 +15,30 @@ class ApplicationController < ActionController::Base
     if session[:current_user].blank?
       flash[:error] = "Please sign in to continue."
       redirect_to :controller=>'users', :action=>'sign_in'
+      return false
     else
+      @user = User.find(session[:current_user_id])
+      @properties = @user.properties
       return true
     end
+  end
+
+  def has_permission
+    unless @user.blank? || !@user.is_admin.eql?(1)
+      return true
+    else
+      flash[:error] = "The page you requested is for administrator only. Please sign in as administrator to continue."
+      redirect_to :controller=>'users', :action=>'sign_in'
+    end
+  end
+
+  def user_is_admin?
+    return false if @user.blank?
+    return @user.is_admin.eql?(1) ? true : false
+  end
+
+  def user_is_owner?(id)
+    return false if @user.blank?
+    return @user.id.eql?(id) ? true : false
   end
 end

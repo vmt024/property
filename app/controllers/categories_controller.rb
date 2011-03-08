@@ -1,5 +1,8 @@
 class CategoriesController < ApplicationController
   layout 'property'
+
+  before_filter :has_permission, :only=>[:edit,:update,:destroy]
+
   # GET /categories
   # GET /categories.xml
   def index

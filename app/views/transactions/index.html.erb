@@ -1,27 +1,33 @@
-<h1>All transactions for <b><%=h @property.property_name %></b></h1>
-<hr/>
+<div class="content_title"><h2>Transactions</h2></div>
+<div class="options">
+  <%= link_to image_tag("add.png",:size=>"18x18") + 'Add', :controller=>'transactions',:action=>'new',:property_account_id=>params[:property_account_id] %>
+  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Categories', :controller=>'categories',:action=>'index' %>
+  <%= link_to image_tag("excel.png",:size=>"18x18") + 'Excel', {:action=>:index,:month=>params[:month],:format=>'csv'},:popup=>true %>
+  <%= link_to image_tag("pdf.png",:size=>"18x18") + 'PDF', {:action=>:index,:month=>params[:month],:format=>'pdf'},:popup=>true %>
+</div>
 <% form_tag :action=>:list do%>
 <b>Search:</b> <br/>
-Date from: <%= date_select 'search','date_from' %>  To: <%= date_select 'search', 'date_to' %> <br/>
+Date from: <%= text_field 'search','date_from',:readonly=>true,:class=>"date_field" %>
+To: <%= text_field 'search', 'date_to',:readonly=>true,:class=>"date_field" %>
 Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>true %> <%= submit_tag 'View' %>
 <% end %>
+<div class="clear"></div>
+
+<% for i in 1..12 do %>
+    <% month = i < 10 ? "0#{i}" : "#{i}"  %>
+    <% month_name = Date::MONTHNAMES %>
+    <%= link_to "<b style='font-size: 1.1em;'>#{month_name[i]}</b>",{:action=>:index,:month=>"2011-#{month}"} %> |
+<% end %>
 <br/>
-<hr/>
-<!--
-< for i in 1..12 do %>
-    < month = i < 10 ? "0#{i}" : "#{i}"  %>
-    < month_name = Date::MONTHNAMES %>
-    <= link_to "#{month_name[i]}",{:action=>:index,:month=>"2011-#{month}"} %> |
-< end %>
-<br/>
-<hr/>
--->
-<table>
+
+
+<table class="list_record">
   <tr>
     <th>Date</th>
     <th>Category</th>
     <th>Type</th>
     <th>Amount</th>
+    <th></th>
     <!--<th id="running_balance_header">Running Balance</th>-->
   </tr>
 <% balance = 0.00 %>
@@ -33,15 +39,17 @@ Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>tru
     <td><%=h display_dr_or_cr(transaction.transaction_type)  %></td>
     <td><%=h display_transaction_amount(transaction)  %></td>
     <!--<td id="running_balance"><=number_to_currency(balance) %></td>-->
-    <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
-    <td><%= link_to 'Delete', transaction, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class="list_option">
+        <%= link_to image_tag("view.gif"), transaction_path(transaction) %>
+        <%= link_to image_tag("edit.png"), edit_transaction_path(transaction) %>
+        <%= link_to image_tag("close.png"), transaction, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
   <tr>
     <td></td>
     <td></td>
     <td><b>Sub Total:</b></td>
-    <td><%=number_to_currency(balance) %></td>
+    <td><b><%=number_to_currency(balance) %></b></td>
     <td></td>
     <td></td>
     
@@ -49,9 +57,14 @@ Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>tru
 
 </table>
 
-<br />
+<script type="text/javascript">
+	$(function() {
+		$( "#search_date_from" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                $( "#search_date_to" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	});
 
-<%= link_to 'Add transaction', :controller=>'transactions',:action=>'new',:property_account_id=>params[:property_account_id] %> |
-<%= link_to 'Manage categories', :controller=>'categories',:action=>'index' %> |
-<%= link_to 'Export to Excel', {:action=>:index,:month=>params[:month],:format=>'csv'},:popup=>true %> |
-<%= link_to 'Export to PDF', {:action=>:index,:month=>params[:month],:format=>'pdf'},:popup=>true %>
+var date_from = new LiveValidation( 'search_date_from' );
+var date_to = new LiveValidation( 'search_date_to' );
+date_from.add( Validate.Presence );
+date_to.add( Validate.Presence );
+</script>

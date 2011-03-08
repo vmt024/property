@@ -1,5 +1,6 @@
-<h1>New transaction</h1>
-
+<div class="content_title">
+  <h2>Add Transaction</h2>
+</div>
 <% form_for(@transaction) do |f| %>
     <%= render :partial=>'form',:locals=>{:f=>f}  %>
 
@@ -7,5 +8,3 @@
     <%= f.submit 'Create' %>
   </p>
 <% end %>
-
-<%= link_to 'Back', transactions_path %>

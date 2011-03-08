@@ -1,8 +1,27 @@
-id: <%=h @category.id  %><br/>
-Description: <%=h @category.description  %><br/>
-Parent Category: <%=link_to(@category.parent_id, :controller=>'categories',:action=>'show',:id=>@category.parent_id) unless @category.parent_id.blank? %>  <%=h get_category_description(@category.parent_id)  %><br/>
-Category Type: <%=h display_dr_or_cr(@category.category_type)  %><br/>
-<br/>
-<%= link_to 'Add', new_category_path %> |
-<%= link_to 'Edit', edit_category_path(@category) %> |
-<%= link_to 'Back', categories_path %>
+<div class="content_title">
+ <h2>Show Category Details</h2>
+</div>
+<div class="options">
+    <%= link_to image_tag("add.png",:size=>"18x18") + 'Add', new_category_path %>
+    <%= link_to image_tag("edit.png",:size=>"18x18") + 'Edit', edit_category_path(@category) if user_is_admin? %>
+</div>
+
+<table class="show_record">
+  <tr>
+    <th>id: </th>
+    <td><%=h @category.id  %></td>
+  </tr>
+  <tr>
+    <th>Description: </th>
+    <td><%=h @category.description  %></td>
+  </tr>
+  <tr>
+    <th>Parent Category: </th>
+    <td><%=link_to(@category.parent_id, :controller=>'categories',:action=>'show',:id=>@category.parent_id) unless @category.parent_id.blank? %>  <%=h get_category_description(@category.parent_id)  %></td>
+  </tr>
+  <tr>
+    <th>Category Type: </th>
+    <td><%=h display_dr_or_cr(@category.category_type)  %></td>
+  </tr>
+</table>
+

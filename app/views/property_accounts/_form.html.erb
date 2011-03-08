@@ -1,28 +1,56 @@
-  <p>
-  <%= f.error_messages %>
-  </p>
+<table class="record_form">
+  <tr>
+    <th>Nick Name: </th>
+    <td><%= f.text_field 'nick_name' %></td>
+  </tr>
 
-  <p>
-    House Number: <%= f.text_field 'address_1' %>
-  </p>
-  <p>
-    Street Name: <%= f.text_field 'address_2' %>
-  </p>
-  <p>
-    Suburb: <%= f.text_field 'address_3' %>
-  </p>
-  <p>
-    City: <%= f.text_field 'address_4' %>
-  </p>
-  <p>
-    Post Code: <%= f.text_field 'post_code' %>
-  </p>
+  <tr>
+    <th>House Number: </th>
+    <td>For privacy and security reason, we do not record your house number.<br/>
+        House Link protects your data while you using it.
+    </td>
+  </tr>
+  <tr>
+    <th>Street Name: </th>
+    <td><%= f.text_field 'address_2' %></td>
+  </tr>
+  <tr>
+    <th>Suburb: </th>
+    <td><%= f.text_field 'address_3' %></td>
+  </tr>
+  <tr>
+    <th>City: </th>
+    <td><%= f.select 'address_4',city_list %></td>
+  </tr>
+  <tr>
+    <th>Post Code: </th>
+    <td><%= f.text_field 'post_code' %></td>
+  </tr>
 
-  <p>
-    Property Type: <%= f.select 'property_type',[['House','House'],['Apartment','Apartment'],['Unit','Unit'],['Townhouse','Townhouse']] %>
-  </p>
+  <tr>
+    <th>Property Type: </th>
+    <td><%= f.select 'property_type',[['House','House'],['Apartment','Apartment'],['Unit','Unit'],['Townhouse','Townhouse']] %></td>
+  </tr>
 
-  <p>
-    Number of bedrooms: <%= f.select 'number_of_bedrooms',[[1,1],[2,2],[3,3],[4,4],[5,5],[6,6]] %>
-  </p>
+  <tr>
+    <th>Number of bedrooms: </th>
+    <td><%= f.select 'number_of_bedrooms',[[1,1],[2,2],[3,3],[4,4],[5,5],[6,6]] %></td>
+  </tr>
+</table>
 
+
+<script type="text/javascript">
+    var nick_name = new LiveValidation('property_account_nick_name');
+    var street = new LiveValidation('property_account_address_2');
+    var suburb = new LiveValidation('property_account_address_3');
+    var city = new LiveValidation('property_account_address_4');
+    street.add( Validate.Presence );
+    suburb.add( Validate.Presence );
+    city.add( Validate.Presence );
+    
+    nick_name.add(Validate.Length, { minimum: 5, maximum:30 });
+    street.add(Validate.Length, { minimum: 5 });
+    street.add(Validate.Length, { minimum: 5 });
+    city.add(Validate.Length, { minimum: 5 });
+    
+</script>

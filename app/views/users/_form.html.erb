@@ -1,18 +1,31 @@
-  <p>
-  <%= f.error_messages %>
-  </p>
-  
-  <p>
-    Name: <%= f.text_field 'name' %>
-  </p>
-  <p>
-    Email: <%= f.text_field 'email' %>
-  </p>
+<table class="record_form">
+  <tr>
+    <th>Name: </th><td><%= f.text_field 'name' %></td>
+  </tr>
+  <tr>
+    <th>Email: </th><td><%= f.text_field 'email' %></td>
+  </tr>
   <% unless params[:action].eql?('edit') %>
-  <p>
-    Password: <%= f.password_field 'password' %>
-  </p>
-  <p>
-    Password Confirmation: <%= f.password_field 'confirm_password' %>
-  </p>
+  <tr>
+    <th>Password: </th><td><%= f.password_field 'password' %></td>
+  </tr>
+  <tr>
+    <th>Password Confirmation: </th><td><%= f.password_field 'confirm_password' %></td>
+  </tr>
   <% end %>
+</table>
+
+
+<script type="text/javascript">
+    var name = new LiveValidation('user_name');
+    var email = new LiveValidation('user_email');
+    var password = new LiveValidation('user_password');
+    var confirm_password = new LiveValidation('user_confirm_password');
+    name.add( Validate.Presence );
+    email.add( Validate.Presence );
+    email.add( Validate.Email );
+    password.add( Validate.Presence);
+    password.add(Validate.Length, { minimum: 6 });
+    confirm_password.add( Validate.Presence);
+    confirm_password.add( Validate.Confirmation, { match: 'user_password' });
+</script>
