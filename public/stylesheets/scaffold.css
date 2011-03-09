@@ -253,3 +253,11 @@ textarea.LV_invalid_field:hover,
 textarea.LV_invalid_field:active {
     border: 1px solid #CC0000;
 }
+
+#aboutus, #contactus {
+  font-size: 1.2em;
+  color:#FFFAFA;
+  display: none;
+  border: 1px dashed #FF7700;
+  padding: 4px 4px 4px 20px;
+}

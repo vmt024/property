@@ -2,7 +2,8 @@
   <h2>Editing Transaction</h2>
 </div>
 <div class="options">
-  <%= link_to image_tag("view.gif",:size=>"18x18") + "Show", @transaction %>
+  <%= link_to image_tag("view.gif",:size=>"18x18") + "Show", @transaction if user_is_owner?(@transaction.property.user_id) || user_is_admin? %>
+  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Transactions', :controller=>'transactions',:action=>'index' %>
 </div>
 <% form_for(@transaction) do |f| %>
   <%= render :partial=>'form',:locals=>{:f=>f}  %>

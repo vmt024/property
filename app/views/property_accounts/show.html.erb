@@ -5,7 +5,8 @@
 </div>
 <div class="options">
     <%= link_to image_tag('add.png',:size=>'18x18') +'Add', new_property_account_path %>
-    <%= link_to image_tag('edit.png',:size=>'18x18') +'Edit', edit_property_account_path(@property_account) if user_is_owner?(@property_account.user_id)%>
+    <%= link_to image_tag('edit.png',:size=>'18x18') +'Edit', edit_property_account_path(@property_account) if user_is_owner?(@property_account.user_id) || user_is_admin? %>
+    <%= link_to image_tag("close.png",:size=>"18x18") + "Delete", @property_account, :confirm => 'Are you sure?', :method => :delete if user_is_owner?(@property_account.user_id) || user_is_admin? %>
 </div>
 
 <table class="show_record">

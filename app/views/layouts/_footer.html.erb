@@ -2,10 +2,25 @@
   <div class="span-24 last">
     <div class="footer_content">
       <ul>
-        <li><%= link_to_function "About", "alert('We are trying to provide a best property management website for New Zealand house owners.');" %></li>
-        <li><%= link_to_function "Contact", "alert('Please email to vmt024@gmail.com for any enquiry');" %></li>
+        <li><%= link_to_function "About us", "$('#aboutus').toggle();$('#contactus').hide();" %></li>
+        <li><%= link_to_function "Contact", "$('#contactus').toggle();$('#aboutus').hide();" %></li>
       </ul>
-      <div id="copyright">
+      <div id="aboutus" class="span-16 last">
+        <p>
+          INITIALLY<br/>
+          We only wanted a tool on web to help us and our friends track the spending for rental properties.<br/>
+          While I doing it, I found few functions would really helpful. So I added them into this web site.<br/>
+          We are trying to provide a best property management web site for New Zealand house owners.<br/>
+          Try it and speak up! Email us your suggestions. So we can improve. It is 100% FREE.
+        </p>
+      </div>
+      <div id="contactus" class="span-8 last">
+        <p>
+          All enquiries please send email to:<br/>
+          <%= mail_to "vmt024@gmail.com" %>
+        </p>
+      </div>
+      <div id="copyright" class="span-23 last">
       &copy; 2011 Vision Multimedia Technology Ltd.  All Rights Reserved. 
       </div>
       </div>

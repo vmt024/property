@@ -1,6 +1,9 @@
 <div class="content_title">
   <h2>New Property Account</h2>
 </div>
+<div class="options">
+  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Properties', :controller=>'users',:action=>'show',:id=>session[:current_user_id] %>
+</div>
 <% form_for(@property_account) do |f| %>
   <%= render :partial=>'form',:locals=>{:f=>f}  %>
   <p>

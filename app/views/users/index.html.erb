@@ -2,7 +2,7 @@
   <h2>Listing Users</h2>
 </div>
 <div class="options">
-  <%= link_to image_tag("add.png",:size=>"18x18") + 'New user', new_user_path %>
+  <%= link_to image_tag("add.png",:size=>"18x18") + 'Add', new_user_path if user_is_admin? %>
 </div>
 <table class="list_record">
   <tr>
@@ -19,8 +19,8 @@
     <td><%=h user.email %></td>
     <td class="list_option">
         <%= link_to image_tag("view.gif"), user %>
-        <%= link_to image_tag("edit.png"), edit_user_path(user) %>
-        <%= link_to image_tag("close.png"), user, :confirm => 'Are you sure?', :method => :delete %></td>
+        <%= link_to image_tag("edit.png"), edit_user_path(user) if user_is_admin? %>
+        <%= link_to image_tag("close.png"), user, :confirm => 'Are you sure?', :method => :delete if user_is_admin? %></td>
   </tr>
 <% end %>
 </table>

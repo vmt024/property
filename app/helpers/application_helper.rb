@@ -85,12 +85,12 @@ module ApplicationHelper
        'Whangarei','Invercargill','Wanganui','Gisborne','Other']
   end
 
-  def is_admin?
+  def user_is_admin?
     return false if @user.blank?
     return @user.is_admin.eql?(1) ? true : false
   end
 
-  def is_owner?(id)
+  def user_is_owner?(id)
     return false if @user.blank?
     return @user.id.eql?(id) ? true : false
   end

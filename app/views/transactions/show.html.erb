@@ -2,7 +2,7 @@
   <h2>Transaction Details</h2>
 </div>
 <div class="options">
-  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Edit', edit_transaction_path(@transaction) %>
+  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Edit', edit_transaction_path(@transaction) if user_is_owner?(@transaction.property.user_id) || user_is_admin? %>
 </div>
 <table class="show_record">
   <tr>

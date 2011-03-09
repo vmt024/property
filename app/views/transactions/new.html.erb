@@ -1,6 +1,9 @@
 <div class="content_title">
   <h2>Add Transaction</h2>
 </div>
+<div class="options">
+  <%= link_to image_tag("edit.png",:size=>"18x18") + 'Transactions', :controller=>'transactions',:action=>'index' %>
+</div>
 <% form_for(@transaction) do |f| %>
     <%= render :partial=>'form',:locals=>{:f=>f}  %>
 

@@ -1,7 +1,10 @@
 <div class="content_title">
   <h2>Welcome <%= session[:current_user] %>!</h2>
 </div>
-<div class="options"> <%= link_to image_tag('edit.png',:size=>'18x18') + 'Edit My Profile', edit_user_path %></div>
+<div class="options">
+  <%= link_to image_tag("add.png",:size=>"18x18") + 'Add Property', new_property_account_path %>
+  <%= link_to image_tag('edit.png',:size=>'18x18') + 'Edit Profile', edit_user_path %>
+</div>
 <hr class="space"></hr>
 <% unless @properties.blank? %>
 <h3>Please select one property account to start with:</h3>

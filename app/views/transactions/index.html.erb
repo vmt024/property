@@ -41,8 +41,8 @@ Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>tru
     <!--<td id="running_balance"><=number_to_currency(balance) %></td>-->
     <td class="list_option">
         <%= link_to image_tag("view.gif"), transaction_path(transaction) %>
-        <%= link_to image_tag("edit.png"), edit_transaction_path(transaction) %>
-        <%= link_to image_tag("close.png"), transaction, :confirm => 'Are you sure?', :method => :delete %></td>
+        <%= link_to image_tag("edit.png"), edit_transaction_path(transaction) if user_is_owner?(transaction.property.user_id) || user_is_admin? %>
+        <%= link_to image_tag("close.png"), transaction, :confirm => 'Are you sure?', :method => :delete  if user_is_owner?(transaction.property.user_id) || user_is_admin?%></td>
   </tr>
 <% end %>
   <tr>
@@ -51,8 +51,6 @@ Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>tru
     <td><b>Sub Total:</b></td>
     <td><b><%=number_to_currency(balance) %></b></td>
     <td></td>
-    <td></td>
-    
   </tr>
 
 </table>
