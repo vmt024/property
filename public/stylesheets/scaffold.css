@@ -1,3 +1,7 @@
+html{
+    background: url("/images/footer-bg.jpg") repeat scroll 0 0 #EEEEEE;
+}
+
 body {
     background: url("/images/bg-img.jpg") repeat-x scroll 0 0 #EEEEEE;
 }
@@ -119,6 +123,7 @@ body {
     background: url(/images/footer-bg.jpg) repeat #333333;
     width: 100%;
     height: 100%;
+    border-right: 2px solid transparent;
 }
 
 .footer_content{
@@ -258,6 +263,32 @@ textarea.LV_invalid_field:active {
   font-size: 1.2em;
   color:#FFFAFA;
   display: none;
-  border: 1px dashed #FF7700;
+  border: 2px dashed #FF7700;
   padding: 4px 4px 4px 20px;
+}
+
+#aboutus p, #contactus p {
+  padding-top: 8px;
+}
+
+input[type="submit"] {
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    height: 28px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #FF6600;
+    padding: 2px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="submit"]:hover{
+    color: #333;
+}
+
+#advanced_search{
+    display: none;
+    padding: 8px 8px;
+    border: 1px dashed #FF7700;
 }

@@ -2,3 +2,5 @@
 nbproject
 db
 log/development.log
+db/development.sqlite3
+config/database.yml

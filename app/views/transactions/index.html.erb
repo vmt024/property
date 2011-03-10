@@ -5,8 +5,9 @@
   <%= link_to image_tag("excel.png",:size=>"18x18") + 'Excel', {:action=>:index,:month=>params[:month],:format=>'csv'},:popup=>true %>
   <%= link_to image_tag("pdf.png",:size=>"18x18") + 'PDF', {:action=>:index,:month=>params[:month],:format=>'pdf'},:popup=>true %>
 </div>
+<b><%= link_to_function "Advanced Search", "$('#advanced_search').toggle('slow');" %></b>
+<div class="span-23" id="advanced_search">
 <% form_tag :action=>:list do%>
-<b>Search:</b> <br/>
 Date from: <%= text_field 'search','date_from',:readonly=>true,:class=>"date_field" %>
 To: <%= text_field 'search', 'date_to',:readonly=>true,:class=>"date_field" %>
 Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>true %> <%= submit_tag 'View' %>
@@ -18,7 +19,7 @@ Transaction Type: <%= select 'search','type',dr_cr_selection,:include_blank=>tru
     <% month_name = Date::MONTHNAMES %>
     <%= link_to "<b style='font-size: 1.1em;'>#{month_name[i]}</b>",{:action=>:index,:month=>"2011-#{month}"} %> |
 <% end %>
-<br/>
+</div>
 
 
 <table class="list_record">

@@ -2,8 +2,8 @@
   <div class="span-24 last">
     <div class="footer_content">
       <ul>
-        <li><%= link_to_function "About us", "$('#aboutus').toggle();$('#contactus').hide();" %></li>
-        <li><%= link_to_function "Contact", "$('#contactus').toggle();$('#aboutus').hide();" %></li>
+        <li><%= link_to_function "About us", "$('#aboutus').toggle('slow');$('#contactus').hide('slow');" %></li>
+        <li><%= link_to_function "Contact", "$('#contactus').toggle('slow');$('#aboutus').hide('slow');" %></li>
       </ul>
       <div id="aboutus" class="span-16 last">
         <p>

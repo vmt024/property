@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_create :validate_password
   before_save :encrypt_password
 
-  attr_protected :is_admin, :password
+  attr_protected :is_admin
   attr_accessor :confirm_password
 
   validates_uniqueness_of :email

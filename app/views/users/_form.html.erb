@@ -1,27 +1,34 @@
 <table class="record_form">
   <tr>
-    <th>Name: </th><td><%= f.text_field 'name' %></td>
+    <th>Name: </th><td><%= f.text_field 'name',:class=>'title' %></td>
   </tr>
   <tr>
-    <th>Email: </th><td><%= f.text_field 'email' %></td>
+    <th>Email: </th><td>
+      <% unless params[:action].eql?('edit') %>
+          <%= f.text_field 'email',:class=>'title' %>
+      <% else %>
+        <%= f.text_field 'email',:class=>'title',:readonly=>true %> Read Only
+      <% end %>
+    </td>
   </tr>
   <% unless params[:action].eql?('edit') %>
   <tr>
-    <th>Password: </th><td><%= f.password_field 'password' %></td>
+    <th>Password: </th><td><%= f.password_field 'password',:value=>'',:class=>'title' %></td>
   </tr>
   <tr>
-    <th>Password Confirmation: </th><td><%= f.password_field 'confirm_password' %></td>
+    <th>Password Confirmation: </th><td><%= f.password_field 'confirm_password',:value=>'',:class=>'title' %></td>
   </tr>
   <% end %>
 </table>
 
 
 <script type="text/javascript">
-    var name = new LiveValidation('user_name');
+    var user_name = new LiveValidation('user_name');
     var email = new LiveValidation('user_email');
     var password = new LiveValidation('user_password');
     var confirm_password = new LiveValidation('user_confirm_password');
-    name.add( Validate.Presence );
+    user_name.add( Validate.Presence );
+    user_name.add( Validate.Length, { minimum: 2, maximum: 20 });
     email.add( Validate.Presence );
     email.add( Validate.Email );
     password.add( Validate.Presence);
